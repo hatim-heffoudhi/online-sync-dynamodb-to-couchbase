@@ -15,7 +15,7 @@ async function initCouchbaseBucket() {
     try {
         // Initialize cluster
         console.log('Initializing Couchbase cluster and bucket...');
-        const cluster = await couchbase.connect(`couchbase://${COUCHBASE_HOST}`, {
+        const cluster = await couchbase.connect(`couchbases://${COUCHBASE_HOST}`, {
             username: COUCHBASE_USERNAME,
             password: COUCHBASE_PASSWORD
         });

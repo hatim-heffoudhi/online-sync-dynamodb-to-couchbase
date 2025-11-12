@@ -75,7 +75,7 @@ Resources:
                 Destination: !GetAtt StreamDLQ.Arn
 Metadata:
   AWS::ServerlessRepo::Application:
-    Name: DynamoDB-sync-online-to-couchbase
+    Name: DynamoDB-online-sync-to-Couchbase
     Description: migrate or sync data from Dynamodb to couchbase
     Author: Hatim HEFFOUDHI
     SpdxLicenseId: MIT

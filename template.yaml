@@ -5,13 +5,13 @@ Description: DynamoDB stream consumer
 Parameters:
   DynamoDBStreamArn:
     Type: String
-    Description: ARN of the DynamoDB Stream to consume
+    Description: Paste the full ARN of the DynamoDB Stream (manual entry)
   CouchbaseHost:
     Type: String
     Description: Couchbase hostname or connection string
   CouchbaseBucket:
     Type: String
-    Default: EmiRed
+    Default: travel-sample
     Description: Couchbase bucket name
   CouchbaseScope:
     Type: String
@@ -23,7 +23,7 @@ Parameters:
     Description: Couchbase collection name
   CouchbaseUsername:
     Type: String
-    Default: Administrator
+    Default: migration-user
     Description: Couchbase username
   CouchbasePassword:
     Type: String

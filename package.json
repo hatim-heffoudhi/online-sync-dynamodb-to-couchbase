@@ -1,0 +1,22 @@
+{
+    "name": "online-sync-dynamodb-to-couchbase",
+    "description": "sync online dynamodb to couchbase",
+    "version": "1.0.0",
+    "private": true,
+    "author": "Hatim Heffoudhi",
+    "dependencies": {
+        "@aws-sdk/util-dynamodb": "^3.651.1",
+        "aws-sdk": "^2.799.0",
+        "couchbase": "^4.4.2"
+    },
+    "devDependencies": {
+        "jest": "^30.0.5"
+    },
+    "scripts": {
+        "test": "jest",
+        "build": "sam build -u --no-cached",
+        "start:api": "sam local start-api",
+        "stop:api": "docker ps | grep '/lambda/nodejs' | awk '{print $1}' | xargs -r docker rm -f",
+        "deploy:api": "sam deploy --guided"
+    }
+}

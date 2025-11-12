@@ -1,0 +1,86 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: DynamoDB stream consumer
+
+Parameters:
+  DynamoDBStreamArn:
+    Type: String
+    Description: ARN of the DynamoDB Stream to consume
+  CouchbaseHost:
+    Type: String
+    Description: Couchbase hostname or connection string
+  CouchbaseBucket:
+    Type: String
+    Default: EmiRed
+    Description: Couchbase bucket name
+  CouchbaseScope:
+    Type: String
+    Default: _default
+    Description: Couchbase scope name
+  CouchbaseCollection:
+    Type: String
+    Default: _default
+    Description: Couchbase collection name
+  CouchbaseUsername:
+    Type: String
+    Default: Administrator
+    Description: Couchbase username
+  CouchbasePassword:
+    Type: String
+    NoEcho: true
+    Description: Couchbase password
+
+Globals:
+  Function:
+    Runtime: nodejs18.x
+    Architectures: [ x86_64 ]
+    Timeout: 60
+    MemorySize: 256
+    LoggingConfig:
+      LogFormat: JSON
+Resources:
+  # Dead-letter queue for failed batches (recommended for streams)
+  StreamDLQ:
+    Type: AWS::SQS::Queue
+    Properties:
+      VisibilityTimeout: 120
+
+  StreamProcessor:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handler/main.handler
+      Policies:
+        - AWSLambdaDynamoDBExecutionRole
+        - SQSSendMessagePolicy:
+            QueueName: !GetAtt StreamDLQ.QueueName
+      Environment:
+        Variables:
+          COUCHBASE_HOST: !Ref CouchbaseHost
+          COUCHBASE_BUCKET: !Ref CouchbaseBucket
+          COUCHBASE_SCOPE: !Ref CouchbaseScope
+          COUCHBASE_COLLECTION: !Ref CouchbaseCollection
+          COUCHBASE_USERNAME: !Ref CouchbaseUsername
+          COUCHBASE_PASSWORD: !Ref CouchbasePassword
+      Events:
+        FromDynamoDB:
+          Type: DynamoDB
+          Properties:
+            Stream: !Ref DynamoDBStreamArn
+            StartingPosition: TRIM_HORIZON          # from the very beginning
+            BatchSize: 100
+            MaximumBatchingWindowInSeconds: 1       # low latency
+            MaximumRetryAttempts: 4                 # fail fast after a few tries
+            DestinationConfig:
+              OnFailure:
+                Destination: !GetAtt StreamDLQ.Arn
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: DynamoDB-sync-online-to-couchbase
+    Description: migrate or sync data from Dynamodb to couchbase
+    Author: Hatim HEFFOUDHI
+    SpdxLicenseId: MIT
+    LicenseUrl: LICENSE
+    ReadmeUrl: README.md
+    Labels: ['lambda','couchbase','sync', 'migrate','online','blueprint', 'dynamodb', 'sam']
+    SemanticVersion: 1.0.0
+    SourceCodeUrl: https://github.com/hatim-heffoudhi/online-sync-dynamodb-to-couchbase

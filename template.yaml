@@ -45,7 +45,7 @@ Resources:
     Properties:
       VisibilityTimeout: 120
 
-  StreamProcessor:
+  DynamoDBToCouchbaseOnlineSync:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handler/main.handler

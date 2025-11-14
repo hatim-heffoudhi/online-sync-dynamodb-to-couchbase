@@ -1,0 +1,7 @@
+DynamoDBStreamArn=arn:aws:dynamodb:eu-west-3:xxxxxx:table/travel-table/stream/2025-11-12T18:05:28.562
+CouchbaseHost=cb.xxxxxx-au5q3vkk.cloud.couchbase.com
+CouchbaseBucket=travel-staging-bucket
+CouchbaseScope=_default
+CouchbaseCollection=_default
+CouchbaseUsername=migration-user
+CouchbasePassword=xxxxxxx

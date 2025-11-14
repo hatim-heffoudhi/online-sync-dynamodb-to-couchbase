@@ -17,6 +17,6 @@
         "build": "sam build -u --no-cached",
         "start:api": "sam local start-api",
         "stop:api": "docker ps | grep '/lambda/nodejs' | awk '{print $1}' | xargs -r docker rm -f",
-        "deploy:api": "sam deploy --guided"
+        "deploy:app": "sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --parameter-overrides $(cat params.txt)"
     }
 }

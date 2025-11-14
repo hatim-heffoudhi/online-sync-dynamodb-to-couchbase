@@ -157,14 +157,15 @@ sam local invoke StreamProcessor \
 
 ## ⚡ Environment Variables
 
-| Variable               | Description                             |
-| ---------------------- | --------------------------------------- |
-| `COUCHBASE_HOST`       | Couchbase connection string or hostname |
-| `COUCHBASE_BUCKET`     | Couchbase bucket name                   |
-| `COUCHBASE_SCOPE`      | Couchbase scope                         |
-| `COUCHBASE_COLLECTION` | Couchbase collection                    |
-| `COUCHBASE_USERNAME`   | Couchbase admin username                |
-| `COUCHBASE_PASSWORD`   | Couchbase password                      |
+| Variable                | Description                             |
+|-------------------------|-----------------------------------------|
+| `COUCHBASE_HOST`        | Couchbase connection string or hostname |
+| `COUCHBASE_BUCKET`      | Couchbase bucket name                   |
+| `COUCHBASE_SCOPE`       | Couchbase scope                         |
+| `COUCHBASE_COLLECTION`  | Couchbase collection                    |
+| `COUCHBASE_USERNAME`    | Couchbase admin username                |
+| `COUCHBASE_PASSWORD`    | Couchbase password                      |
+| `DynamoDBStreamArn`     | DynamoDB ARN Stream                     |
 
 Example `env.json` for local testing:
 
@@ -200,12 +201,12 @@ Failed batches are automatically sent to the **SQS DLQ** (`StreamDLQ`), visible 
 ## 🧰 Useful NPM Scripts
 
 | Command              | Description                         |
-| -------------------- | ----------------------------------- |
+|----------------------| ----------------------------------- |
 | `npm run build`      | Rebuild Lambda with SAM             |
 | `npm run test`       | Run unit tests with Jest            |
 | `npm run start:api`  | Start the API locally with SAM      |
 | `npm run stop:api`   | Stop local Docker Lambda containers |
-| `npm run deploy:api` | Deploy the stack interactively      |
+| `npm run deploy:app` | Deploy the stack interactively      |
 
 ---
 

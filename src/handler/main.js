@@ -9,7 +9,7 @@ const {initCouchbaseBucket} = require('../util/couchbaseClient');
 function makeKey(keys) {
     const obj = unmarshall(keys);
     // Example: if table has only pk
-    return obj.id || obj.pk || obj.carId;
+    return obj.pk || obj.id || obj.ID;
     // If table has pk+sk, return `${obj.pk}#${obj.sk}`
 }
 
